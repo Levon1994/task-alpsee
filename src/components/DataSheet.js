@@ -643,7 +643,7 @@ export default class DataSheet extends PureComponent {
     const { forceEdit } = this.state;
     let row = data[index];
     return (
-      <RowRenderer key={keyFn ? keyFn(index) : key} row={index} cells={row} style={style}>
+      <RowRenderer key={key} row={index} cells={row} style={style}>
         {row.map((cell, j) => {
           const isEditing = this.isEditing(index, j);
           return (
@@ -709,34 +709,26 @@ export default class DataSheet extends PureComponent {
         <WindowScroller scrollElement={window} >
             {({ isScrolling, height, width, registerChild, onChildScroll }) => (
               <div>
-                <AutoSizer disableHeight disableWidth>
-                  {() => (
-                    <div ref={registerChild}>
-                      <List
-                        ref={el => {
-                            window.listEl = el;
-                        }}
-                        autoHeight
-                        rowHeight={25}
-                        overscanRowCount={2}
-                        onScroll={onChildScroll}
-                        isScrolling={isScrolling}
-                        rowRenderer={this.renderRow}
-                        rowCount={data.length}
-                        height={height}
-                        width={width}
-                        overscanRowCount={20}
-                        containerStyle={{
-                          width: '100%"',
-                          maxWidth: '100%'
-                        }}
-                        style={{
-                          width: '100%',
-                        }}
-                      />
-                    </div>
-                  )}
-                </AutoSizer>
+                <List
+                  ref={el => {
+                      window.listEl = el;
+                  }}
+                  rowHeight={25}
+                  overscanRowCount={40}
+                  onScroll={onChildScroll}
+                  isScrolling={isScrolling}
+                  rowRenderer={this.renderRow}
+                  rowCount={data.length}
+                  height={height}
+                  width={width}
+                  containerStyle={{
+                    width: '100%"',
+                    maxWidth: '100%'
+                  }}
+                  style={{
+                    width: '100%',
+                  }}
+                />
               </div>
             )}
           </WindowScroller>
