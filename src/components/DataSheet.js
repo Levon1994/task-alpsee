@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { AutoSizer, List } from 'react-virtualized';
+import { WindowScroller, List, AutoSizer } from 'react-virtualized';
 import PropTypes from 'prop-types';
 import Sheet from './Sheet';
 import Row from './Row';
@@ -706,18 +706,40 @@ export default class DataSheet extends PureComponent {
             .filter(a => a)
             .join(' ')}
         >
-        <AutoSizer disableHeight disableWidth>
-            {() => (
-              <List
-                rowHeight={25}
-                rowRenderer={this.renderRow}
-                rowCount={data.length}
-                height={window.innerHeight}
-                width={window.innerWidth}
-                overscanRowCount={20}
-              />
+        <WindowScroller scrollElement={window} >
+            {({ isScrolling, height, width, registerChild, onChildScroll }) => (
+              <div>
+                <AutoSizer disableHeight disableWidth>
+                  {() => (
+                    <div ref={registerChild}>
+                      <List
+                        ref={el => {
+                            window.listEl = el;
+                        }}
+                        autoHeight
+                        rowHeight={25}
+                        overscanRowCount={2}
+                        onScroll={onChildScroll}
+                        isScrolling={isScrolling}
+                        rowRenderer={this.renderRow}
+                        rowCount={data.length}
+                        height={height}
+                        width={width}
+                        overscanRowCount={20}
+                        containerStyle={{
+                          width: '100%"',
+                          maxWidth: '100%'
+                        }}
+                        style={{
+                          width: '100%',
+                        }}
+                      />
+                    </div>
+                  )}
+                </AutoSizer>
+              </div>
             )}
-          </AutoSizer>
+          </WindowScroller>
         </SheetRenderer>
       </span>
     );

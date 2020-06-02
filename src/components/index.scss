@@ -15,6 +15,19 @@ span.data-grid-container, span.data-grid-container:focus {
   }
 }
 
+.main {
+  min-height: 100vh;
+  .Dashboard {
+    min-height: 100vh;
+    .data-grid-container {
+      min-height: 100vh;
+      .data-grid {
+        min-height: 100vh;
+      }
+    }
+  }
+}
+
 .data-grid-container .data-grid .cell.updated {
     background-color: rgba(0, 145, 253, 0.16);
     transition : background-color 0ms ease ;
