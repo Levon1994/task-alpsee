@@ -15,15 +15,11 @@ import 'sass/media.scss';
 import 'sass/feather-icon.scss';
 
 const App = () => (
-  <main className="layout-w">
-    <div className="content-w">
-      <div className="content-i">
-        <Switch>
-            <Route path="/dashboard" component={Dashboard} />
-            <Redirect from="/" to="/dashboard" />
-        </Switch>
-      </div>
-    </div>
+  <main className="main">
+    <Switch>
+        <Route path="/dashboard" component={Dashboard} />
+        <Redirect from="/" to="/dashboard" />
+    </Switch>
   </main>
 );
 

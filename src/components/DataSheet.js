@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { AutoSizer, List } from 'react-virtualized';
 import PropTypes from 'prop-types';
 import Sheet from './Sheet';
 import Row from './Row';
@@ -350,8 +351,8 @@ export default class DataSheet extends PureComponent {
 
   getSelectedCells(data, start, end) {
     let selected = [];
-    range(start.i, end.i).map(row => {
-      range(start.j, end.j).map(col => {
+    range(start.i, end.i).forEach(row => {
+      range(start.j, end.j).forEach(col => {
         if (data[row] && data[row][col]) {
           selected.push({ cell: data[row][col], row, col });
         }
@@ -627,9 +628,8 @@ export default class DataSheet extends PureComponent {
     return this.state.clear.i === i && this.state.clear.j === j;
   }
 
-  render() {
+  renderRow = ({index, style, key}) => {
     const {
-      sheetRenderer: SheetRenderer,
       rowRenderer: RowRenderer,
       cellRenderer,
       dataRenderer,
@@ -637,12 +637,59 @@ export default class DataSheet extends PureComponent {
       dataEditor,
       valueViewer,
       attributesRenderer,
-      className,
-      overflow,
       data,
       keyFn,
     } = this.props;
     const { forceEdit } = this.state;
+    let row = data[index];
+    return (
+      <RowRenderer key={keyFn ? keyFn(index) : key} row={index} cells={row} style={style}>
+        {row.map((cell, j) => {
+          const isEditing = this.isEditing(index, j);
+          return (
+            <DataCell
+              key={cell.key ? cell.key : `${index}-${j}`}
+              row={index}
+              col={j}
+              cell={cell}
+              forceEdit={forceEdit}
+              onMouseDown={this.onMouseDown}
+              onMouseOver={this.onMouseOver}
+              onDoubleClick={this.onDoubleClick}
+              onContextMenu={this.onContextMenu}
+              onChange={this.onChange}
+              onRevert={this.onRevert}
+              onNavigate={this.handleKeyboardCellMovement}
+              onKey={this.handleKey}
+              selected={this.isSelected(index, j)}
+              editing={isEditing}
+              clearing={this.isClearing(index, j)}
+              attributesRenderer={attributesRenderer}
+              cellRenderer={cellRenderer}
+              valueRenderer={valueRenderer}
+              dataRenderer={dataRenderer}
+              valueViewer={valueViewer}
+              dataEditor={dataEditor}
+              editValue={this.state.editValue}
+              {...(isEditing
+                ? {
+                    onEdit: this.handleEdit,
+                  }
+                : {})}
+            />
+          );
+        })}
+      </RowRenderer>
+    );
+  };
+
+  render() {
+    const {
+      sheetRenderer: SheetRenderer,
+      className,
+      overflow,
+      data,
+    } = this.props;
 
     return (
       <span
@@ -659,45 +706,18 @@ export default class DataSheet extends PureComponent {
             .filter(a => a)
             .join(' ')}
         >
-          {data.map((row, i) => (
-            <RowRenderer key={keyFn ? keyFn(i) : i} row={i} cells={row}>
-              {row.map((cell, j) => {
-                const isEditing = this.isEditing(i, j);
-                return (
-                  <DataCell
-                    key={cell.key ? cell.key : `${i}-${j}`}
-                    row={i}
-                    col={j}
-                    cell={cell}
-                    forceEdit={forceEdit}
-                    onMouseDown={this.onMouseDown}
-                    onMouseOver={this.onMouseOver}
-                    onDoubleClick={this.onDoubleClick}
-                    onContextMenu={this.onContextMenu}
-                    onChange={this.onChange}
-                    onRevert={this.onRevert}
-                    onNavigate={this.handleKeyboardCellMovement}
-                    onKey={this.handleKey}
-                    selected={this.isSelected(i, j)}
-                    editing={isEditing}
-                    clearing={this.isClearing(i, j)}
-                    attributesRenderer={attributesRenderer}
-                    cellRenderer={cellRenderer}
-                    valueRenderer={valueRenderer}
-                    dataRenderer={dataRenderer}
-                    valueViewer={valueViewer}
-                    dataEditor={dataEditor}
-                    editValue={this.state.editValue}
-                    {...(isEditing
-                      ? {
-                          onEdit: this.handleEdit,
-                        }
-                      : {})}
-                  />
-                );
-              })}
-            </RowRenderer>
-          ))}
+        <AutoSizer disableHeight disableWidth>
+            {() => (
+              <List
+                rowHeight={25}
+                rowRenderer={this.renderRow}
+                rowCount={data.length}
+                height={window.innerHeight}
+                width={window.innerWidth}
+                overscanRowCount={20}
+              />
+            )}
+          </AutoSizer>
         </SheetRenderer>
       </span>
     );

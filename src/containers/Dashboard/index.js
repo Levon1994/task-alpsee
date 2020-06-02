@@ -14,7 +14,7 @@ const genCharArray = (charA, charZ) => {
 };
 
 const generateNumbers = count => {
-  const foo = new Array(count || 11);
+  const foo = new Array(count || 1001);
   const numbersArr = [];
 
   for(var i = 0; i < foo.length; i++) {
@@ -53,7 +53,7 @@ export default class Dashboard extends React.Component {
   generateGrid() {
     return generateNumbers().map((row, i) =>
       ['', ...genCharArray('a', 'z')].map((col, j) => {
-        if(i == 0 && j == 0) {
+        if(i === 0 && j === 0) {
           return {readOnly: true, value: ''}
         }
         if(row === 0) {
@@ -70,7 +70,7 @@ export default class Dashboard extends React.Component {
   validateExp(trailKeys, expr) {
     let valid = true;
     const matches = expr.match(/[A-Z][1-9]+/g) || [];
-    matches.map(match => {
+    matches.forEach(match => {
       if(trailKeys.indexOf(match) > -1) {
         valid = false
       } else {
@@ -132,5 +132,4 @@ export default class Dashboard extends React.Component {
       </div>
     )
   }
-
 }
