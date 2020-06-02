@@ -5,7 +5,7 @@ import CellShape from './CellShape';
 
 class Row extends PureComponent {
   render() {
-    return <tr>{this.props.children}</tr>;
+    return <div>{this.props.children}</div>;
   }
 }
 

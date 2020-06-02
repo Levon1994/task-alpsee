@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 class Sheet extends PureComponent {
   render() {
     return (
-      <table className={this.props.className}>
-        <tbody>{this.props.children}</tbody>
-      </table>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     );
   }
 }

@@ -23,7 +23,7 @@ export default class Cell extends PureComponent {
       : {};
 
     return (
-      <td
+      <div
         className={className}
         onMouseDown={onMouseDown}
         onMouseOver={onMouseOver}
@@ -36,7 +36,7 @@ export default class Cell extends PureComponent {
         {...attributes}
       >
         {this.props.children}
-      </td>
+      </div>
     );
   }
 }

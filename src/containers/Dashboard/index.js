@@ -1,20 +1,31 @@
 import React from 'react';
 import _ from 'lodash';
 import * as mathjs from 'mathjs';
-import Datasheet from 'components';
+import ExcelTable from 'components';
 
 import './style.scss';
 
-function genCharArray(charA, charZ) {
-    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+const genCharArray = (charA, charZ) => {
+    let a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
     for (; i <= j; ++i) {
         a.push(String.fromCharCode(i).toUpperCase());
     }
     return a;
-}
+};
+
+const generateNumbers = count => {
+  const foo = new Array(count || 11);
+  const numbersArr = [];
+
+  for(var i = 0; i < foo.length; i++) {
+    numbersArr.push(i);
+  }
+
+  return numbersArr;
+};
 
 const generateState = () => {
-  const numbersArr = [1,2,3,4,5,6,7,8,9];
+  const numbersArr = generateNumbers();
   const lettersArr = genCharArray('a', 'z');
 
   const state = {};
@@ -39,9 +50,8 @@ export default class Dashboard extends React.Component {
     this.state = generateState();
   }
 
-
   generateGrid() {
-    return [0,1,2,3,4,5,6,7,8,9].map((row, i) =>
+    return generateNumbers().map((row, i) =>
       ['', ...genCharArray('a', 'z')].map((col, j) => {
         if(i == 0 && j == 0) {
           return {readOnly: true, value: ''}
@@ -111,10 +121,9 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-
     return (
       <div className="Dashboard">
-        <Datasheet
+        <ExcelTable
           data={this.generateGrid()}
           valueRenderer={(cell) => cell.value}
           dataRenderer={(cell) => cell.expr}
