@@ -43,7 +43,7 @@ span.data-grid-container, span.data-grid-container:focus {
   transition : background-color 500ms ease;
   vertical-align: middle;
   text-align: right;
-  border: 1px solid #DDD;
+  border: 1px solid #e8e8e8;
   padding: 0;
   width: 100px;
   min-width: 100px;
@@ -53,14 +53,14 @@ span.data-grid-container, span.data-grid-container:focus {
   }
 }
 .data-grid-container .data-grid .cell.selected {
-  border: 1px double rgb(33, 133, 208);
+  border: 1px double #2ab932;
   transition: none;
   box-shadow: inset 0 -100px 0 rgba(33, 133, 208, 0.15);
 }
 
 .data-grid-container .data-grid .cell.read-only {
-  background: whitesmoke;
-  color: #999;
+  background: #bdbdbd;
+  color: #4a4a4a;
   text-align: center;
 }
 
@@ -73,12 +73,13 @@ span.data-grid-container, span.data-grid-container:focus {
 
 .data-grid-container .data-grid .cell > input {
   outline: none !important;
-  border: 2px solid rgb(33, 133, 208);
+  border: 2px solid #2ab932;
   text-align:right;
   width: 100%;
   height: 23px;;
   background: none;
   display: block;
+  font-size: 14px;
 }
 
 
