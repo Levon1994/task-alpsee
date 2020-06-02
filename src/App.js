@@ -9,10 +9,7 @@ import {
   Dashboard,
 } from 'containers';
 
-import 'sass/animate.scss';
 import 'sass/main.scss';
-import 'sass/media.scss';
-import 'sass/feather-icon.scss';
 
 const App = () => (
   <main className="main">
