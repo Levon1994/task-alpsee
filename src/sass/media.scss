@@ -1,0 +1,89 @@
+@import 'sass/variables.scss';
+
+// Extra large devices (large desktops, 1200px and up)
+@media screen and (max-width: 1200px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media screen and (max-width: 992px) {
+  .ImageContent {
+    height: 400px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  header {
+    .page-content {
+      .menu-wrapper {
+        display: block;
+      }
+      .header-list {
+        display: none;
+        flex-direction: column;
+        background-color: $secondary-white;
+        position: fixed;
+        left: 0;
+        top: 70px;
+        width: 100%;
+        height: calc(100% - 70px);
+        .Dropdown {
+          &_label {
+            text-align: center;
+            position: relative;
+            .Icon {
+              position: absolute;
+            }
+          }
+          &_content {
+            position: inherit;
+            top: 0;
+            > div {
+              background: none;
+              box-shadow: none;
+              &:before {
+                display: none;
+              }
+              .dropdown-list {
+                background: none;
+                padding-bottom: 0;
+              }
+            }
+          }
+        }
+        .nav-list {
+          flex-direction: column;
+          padding-top: 20px;
+          li {
+            margin-bottom: 20px;
+          }
+        }
+        .languages {
+          position: relative;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+    &.active {
+      .header-list {
+        display: flex;
+      }
+    }
+  }
+  &.darkMode {
+    .header-list {
+      background-color: $dark !important;
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media screen and (max-width: 768px) {
+
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 576px) {
+
+}
