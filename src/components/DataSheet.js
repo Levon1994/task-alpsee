@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { WindowScroller, List, AutoSizer } from 'react-virtualized';
+import { WindowScroller, List } from 'react-virtualized';
 import PropTypes from 'prop-types';
 import Sheet from './Sheet';
 import Row from './Row';
@@ -638,7 +638,6 @@ export default class DataSheet extends PureComponent {
       valueViewer,
       attributesRenderer,
       data,
-      keyFn,
     } = this.props;
     const { forceEdit } = this.state;
     let row = data[index];
